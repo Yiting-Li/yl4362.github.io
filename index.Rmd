@@ -1,5 +1,5 @@
 ---
-title: "My awesome website"
+title: "Welcome"
 output: 
   html_document:
     toc: true
@@ -9,6 +9,10 @@ output:
 -----
 ### This is Yiting's first website on github!
 
-
-
 [About me](about.html)
+
+### Well...
+
+**Today is Nov.4th, the day after the "election day"...time is 15:30...still not sure about the result...**
+
+![](https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif)
