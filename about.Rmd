@@ -6,4 +6,49 @@ output:
     toc_float: true
 ---
 
-# Academic Experience
+------
+## Academic Experience
+
+### Mailman School of Public Health, Columbia University, NY        
+
+**Master of Public Health (MPH), Epidemiology, Certificate in Applied Biostatistics**
+
+Sep/2019 - Expected Apr/2021
+
+•	Relevant Coursework: Research Methods and Applications (Qualitative and Quantitative), Public Health Interventions, Analysis of Categorical Data, Application of Epi Research Methods (SAS), Applied Regression, Data Science I (R Language), Relational Database and SQL Programming, Master’s Essay in Epi
+
+### China Medical University, Shenyang, China  
+
+**Bachelor of Medicine, Clinical Medicine**
+
+Oct/2012 - Graduated July/2018
+
+
+## Professional Experience
+
+### AHA COVID-19 Registry, NewYork – Presbyterian Hospital
+
+**Data Abstractor**                                                                                             
+
+July/2020 - Present                                                                       
+
+•	Abstracted demographic, past medical history, medications, current hospitalization, and laboratory data from EPIC
+
+•	Helped optimize the data abstracting process and content
+
+•	Joined weekly meeting with Dr.Elkind, Dr.Navi, Research Coordinator and other colleagues
+
+### Fourth Affiliated Hospital of China Medical University
+
+**Clinical Intern, Shenyang, China**                                                                             
+
+Aug/2016 - May/2018                                   
+
+•	Rotated in multiple clinical departments (e.g., Cardiology, Pulmonology, Gastroenterology, Radiology, Neurology, OB&GYN, General Surgery, Pediatrics, Community Health, Emergency)
+
+•	Took charge of hospitalized patients, conducted daily pre-round record, reported patients to supervised attendings, wrote progress notes
+
+•	Presented on various clinical topics (e.g., patient education about heart failure)
+
+•	Shadowed outpatient visits (e.g., aging clinic, dermatology clinic, community health center)
+
