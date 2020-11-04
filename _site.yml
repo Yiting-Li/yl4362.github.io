@@ -1,0 +1,14 @@
+name: "Yay internet!"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "About me"
+      href: about.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<yitingli95@outlook.com>
+    - icon: fa-github fa-lg
+      href: https://github.com/Yiting-Li
+output:
+  html_document:
+    theme: cerulean
