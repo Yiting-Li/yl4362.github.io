@@ -1,21 +1,18 @@
 ---
-title: "Plots"
+title: "Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
 ---
 
-------
-
-```{r message=FALSE}
+```{r setup, include=FALSE}
+library(flexdashboard)
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
-```
 
-## Crete a database about Korean restaurants in Manhattan from `NYC Restaurant Inspection`
-```{r}
 data("rest_inspec")
 
 rest_inspec =
@@ -29,7 +26,11 @@ rest_inspec =
   )
 ```
 
-## Scatterplot: scores, grades, and restaurant names by streets
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Scatterplot: scores, grades, and restaurant names by streets
+
 ```{r}
 rest_inspec %>%
   mutate(text_label = str_c("Name: ", dba, "\nGrade: ", grade)) %>%
@@ -39,7 +40,10 @@ rest_inspec %>%
   )
 ```
 
-## Boxplot: score of korean restauratns in different streets
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Boxplot: score of korean restauratns in different streets
 
 ```{r}
 rest_inspec %>%
@@ -47,7 +51,7 @@ rest_inspec %>%
   plot_ly(y = ~score, color = ~street, type = "box", colors = "viridis")
 ```
 
-## Barchart: count of korean restaurants in a specific street
+### Barchart: count of korean restaurants in a specific street
 
 ```{r}
 rest_inspec %>%
@@ -55,3 +59,4 @@ rest_inspec %>%
   mutate(street = fct_reorder(street, n)) %>%
   plot_ly(x = ~street, y = ~n, color = ~street, type = "bar", colors = "viridis")
 ```
+
