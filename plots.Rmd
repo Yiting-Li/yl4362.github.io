@@ -1,0 +1,58 @@
+---
+title: "Plots"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+------
+# Plots
+
+```{r message=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+## Crete a database about Korean restaurants in Manhattan from `NYC Restaurant Inspection`
+```{r}
+data("rest_inspec")
+
+rest_inspec =
+  rest_inspec %>%
+  select(
+    camis, dba, cuisine_description, boro, zipcode, street, score, grade) %>%
+  filter(
+    !is.na(grade),
+    cuisine_description == "Korean",
+    boro == "MANHATTAN"
+  )
+```
+
+## Scatterplot: scores, grades, and restaurant names by streets
+```{r}
+rest_inspec %>%
+  mutate(text_label = str_c("Name: ", dba, "\nGrade: ", grade)) %>%
+  plot_ly(
+    x = ~street, y = ~score, type = "scatter", mode = "markers",
+    color = ~grade, text = ~text_label, alpha = 0.5
+  )
+```
+
+## Boxplot: score of korean restauratns in different streets
+
+```{r}
+rest_inspec %>%
+  mutate(street = fct_reorder(street, score)) %>%
+  plot_ly(y = ~score, color = ~street, type = "box", colors = "viridis")
+```
+
+## Barchart: count of korean restaurants in a specific street
+
+```{r}
+rest_inspec %>%
+  count(street) %>%
+  mutate(street = fct_reorder(street, n)) %>%
+  plot_ly(x = ~street, y = ~n, color = ~street, type = "bar", colors = "viridis")
+```

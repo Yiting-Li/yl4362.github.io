@@ -5,10 +5,15 @@ navbar:
   right:
     - text: "About me"
       href: about.html
+    - text: "Plots"
+      href: plots.html
     - icon: fa-envelope fa-lg
       href: mailto:<yitingli95@outlook.com>
     - icon: fa-github fa-lg
       href: https://github.com/Yiting-Li
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/yiting-evelyn-li/
+
 output:
   html_document:
     theme: cerulean

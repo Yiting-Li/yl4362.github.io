@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Plots</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About me</a>
+</li>
+<li>
+  <a href="plots.html">Plots</a>
+</li>
+<li>
+  <a href="mailto:&lt;yitingli95@outlook.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/Yiting-Li">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/yiting-evelyn-li/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Plots</h1>
+
+</div>
+
+
+<hr />
+<div id="plots" class="section level1">
+<h1>Plots</h1>
+<pre class="r"><code>library(tidyverse)
+library(p8105.datasets)
+library(plotly)</code></pre>
+<div id="crete-a-database-about-korean-restaurants-in-manhattan-from-nyc-restaurant-inspection" class="section level2">
+<h2>Crete a database about Korean restaurants in Manhattan from <code>NYC Restaurant Inspection</code></h2>
+<pre class="r"><code>data(&quot;rest_inspec&quot;)
+
+rest_inspec =
+  rest_inspec %&gt;%
+  select(
+    camis, dba, cuisine_description, boro, zipcode, street, score, grade) %&gt;%
+  filter(
+    !is.na(grade),
+    cuisine_description == &quot;Korean&quot;,
+    boro == &quot;MANHATTAN&quot;
+  )</code></pre>
+</div>
+<div id="scatterplot-scores-grades-and-restaurant-names-by-streets" class="section level2">
+<h2>Scatterplot: scores, grades, and restaurant names by streets</h2>
+<pre class="r"><code>rest_inspec %&gt;%
+  mutate(text_label = str_c(&quot;Name: &quot;, dba, &quot;\nGrade: &quot;, grade)) %&gt;%
+  plot_ly(
+    x = ~street, y = ~score, type = &quot;scatter&quot;, mode = &quot;markers&quot;,
+    color = ~grade, text = ~text_label, alpha = 0.5
+  )</code></pre>
+<pre><code>## Warning: `arrange_()` is deprecated as of dplyr 0.7.0.
+## Please use `arrange()` instead.
+## See vignette(&#39;programming&#39;) for more help
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div id="htmlwidget-de462bfe546449445a1c" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-de462bfe546449445a1c">{"x":{"visdat":{"7c5832df7ec6":["function () ","plotlyVisDat"]},"cur_data":"7c5832df7ec6","attrs":{"7c5832df7ec6":{"x":{},"y":{},"mode":"markers","text":{},"color":{},"alpha":0.5,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"street","type":"category","categoryorder":"array","categoryarray":["10 AVENUE","1ST AVE","3RD AVE","5TH AVE","6TH AVE","9TH AVE","AMSTERDAM AVE","BOWERY","BROADWAY","CANAL ST","CARMINE STREET","CHURCH ST","E 23RD ST","E 31ST ST","E 32ND ST","E 57TH ST","E 6TH ST","EAST   31 STREET","EAST   32 STREET","HARRISON STREET","LEXINGTON AVE","LEXINGTON AVENUE","MACDOUGAL ST","MURRAY ST","PARK AVENUE","SAINT MARKS PLACE","SPRING ST","UNION SQ W","W 14TH ST","W 31ST ST","W 32ND ST","W 33 STREET","W 33RD ST","W 35TH ST","W 37TH ST","W 39TH ST","W 48TH ST","W 56TH ST","WAVERLY PL","WEST    4 STREET","WEST   26 STREET","WEST   32 STREET","WEST   35 STREET","WEST   36 STREET","WEST   45 STREET","WEST   50 STREET","WEST   52 STREET","WEST 32 STREET","WORTH ST"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"score"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","BROADWAY","W 32ND ST","WEST   35 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   32 STREET","6TH AVE","W 32ND ST","WEST   32 STREET","5TH AVE","W 35TH ST","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","W 35TH ST","BROADWAY","WEST   35 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   32 STREET","BROADWAY","BROADWAY","W 32ND ST","W 35TH ST","W 32ND ST","W 32ND ST","BROADWAY","6TH AVE","WEST   35 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   32 STREET","5TH AVE","W 32ND ST","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","5TH AVE","W 32ND ST","W 32ND ST","W 33RD ST","WEST   32 STREET","WEST   32 STREET","W 33 STREET","WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","W 35TH ST","W 32ND ST","WEST   35 STREET","WEST 32 STREET","WEST   35 STREET","W 32ND ST","6TH AVE","WEST   32 STREET","WEST 32 STREET","W 32ND ST","WEST 32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   35 STREET","W 32ND ST","W 32ND ST","WEST 32 STREET","WEST   32 STREET","WEST   35 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   35 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","6TH AVE","W 32ND ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","6TH AVE","WEST   32 STREET","WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","W 33 STREET","WEST   35 STREET","W 33 STREET","WEST   32 STREET","WEST   32 STREET","5TH AVE","W 31ST ST","WEST   32 STREET","W 32ND ST","W 33RD ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","WEST 32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   35 STREET","WEST   35 STREET","BROADWAY","W 32ND ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   35 STREET","WEST   35 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","WEST   35 STREET","W 32ND ST","WEST   35 STREET","6TH AVE","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST 32 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   35 STREET","W 31ST ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   35 STREET","W 32ND ST","WEST   32 STREET","WEST   35 STREET","6TH AVE","W 33 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST 32 STREET","WEST   32 STREET","WEST   32 STREET","W 33 STREET","WEST   35 STREET","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","WEST   35 STREET","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","6TH AVE","W 32ND ST","WEST   32 STREET","6TH AVE","W 32ND ST","W 32ND ST","WEST   32 STREET","5TH AVE","WEST   32 STREET","WEST   32 STREET","W 32ND ST","5TH AVE","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   32 STREET","WEST   35 STREET","WEST   35 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   35 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST 32 STREET","W 31ST ST","WEST   32 STREET","CANAL ST","CANAL ST","CANAL ST","CANAL ST","CANAL ST","3RD AVE","SAINT MARKS PLACE","WAVERLY PL","E 6TH ST","1ST AVE","3RD AVE","3RD AVE","1ST AVE","1ST AVE","WAVERLY PL","WAVERLY PL","UNION SQ W","SAINT MARKS PLACE","E 6TH ST","E 6TH ST","SAINT MARKS PLACE","WAVERLY PL","3RD AVE","WAVERLY PL","3RD AVE","E 6TH ST","SAINT MARKS PLACE","WAVERLY PL","3RD AVE","E 6TH ST","SAINT MARKS PLACE","E 6TH ST","3RD AVE","MURRAY ST","MURRAY ST","MURRAY ST","MURRAY ST","WEST   26 STREET","WEST   26 STREET","WEST   26 STREET","WEST   26 STREET","WEST   26 STREET","WEST   26 STREET","WEST   26 STREET","9TH AVE","9TH AVE","9TH AVE","9TH AVE","9TH AVE","9TH AVE","9TH AVE","SPRING ST","MACDOUGAL ST","MACDOUGAL ST","WORTH ST","HARRISON STREET","WORTH ST","CHURCH ST","CHURCH ST","CHURCH ST","CHURCH ST","HARRISON STREET","HARRISON STREET","HARRISON STREET","HARRISON STREET","CANAL ST","HARRISON STREET","CANAL ST","WORTH ST","HARRISON STREET","CHURCH ST","CHURCH ST","HARRISON STREET","CARMINE STREET","W 14TH ST","CARMINE STREET","WEST    4 STREET","CARMINE STREET","CARMINE STREET","WEST    4 STREET","CARMINE STREET","CARMINE STREET","CARMINE STREET","WEST    4 STREET","CARMINE STREET","WEST    4 STREET","WEST    4 STREET","CARMINE STREET","WEST    4 STREET","CARMINE STREET","CARMINE STREET","EAST   32 STREET","5TH AVE","EAST   31 STREET","5TH AVE","EAST   32 STREET","E 32ND ST","EAST   31 STREET","EAST   31 STREET","E 31ST ST","5TH AVE","EAST   32 STREET","5TH AVE","5TH AVE","EAST   31 STREET","5TH AVE","5TH AVE","5TH AVE","5TH AVE","EAST   31 STREET","5TH AVE","PARK AVENUE","5TH AVE","5TH AVE","5TH AVE","E 31ST ST","E 31ST ST","E 32ND ST","PARK AVENUE","5TH AVE","E 32ND ST","E 31ST ST","EAST   31 STREET","5TH AVE","PARK AVENUE","5TH AVE","5TH AVE","PARK AVENUE","E 32ND ST","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE","EAST   31 STREET","EAST   32 STREET","PARK AVENUE","EAST   31 STREET","EAST   31 STREET","5TH AVE","E 31ST ST","5TH AVE","EAST   32 STREET","PARK AVENUE","PARK AVENUE","5TH AVE","5TH AVE","EAST   32 STREET","5TH AVE","PARK AVENUE","W 39TH ST","WEST   36 STREET","WEST   36 STREET","WEST   36 STREET","WEST   36 STREET","WEST   36 STREET","5TH AVE","WEST   36 STREET","WEST   36 STREET","W 37TH ST","W 39TH ST","W 39TH ST","W 37TH ST","WEST   36 STREET","WEST   36 STREET","WEST   50 STREET","WEST   50 STREET","WEST   52 STREET","WEST   52 STREET","W 56TH ST","WEST   52 STREET","WEST   52 STREET","WEST   50 STREET","WEST   52 STREET","WEST   50 STREET","WEST   50 STREET","WEST   52 STREET","WEST   50 STREET","WEST   52 STREET","W 56TH ST","WEST   50 STREET","W 56TH ST","E 57TH ST","E 57TH ST","E 57TH ST","E 57TH ST","LEXINGTON AVE","LEXINGTON AVE","E 57TH ST","E 57TH ST","E 57TH ST","E 57TH ST","E 57TH ST","BROADWAY","AMSTERDAM AVE","BROADWAY","BROADWAY","AMSTERDAM AVE","BROADWAY","AMSTERDAM AVE","BROADWAY","BROADWAY","BROADWAY","BROADWAY","AMSTERDAM AVE","BROADWAY","AMSTERDAM AVE","AMSTERDAM AVE","AMSTERDAM AVE","BROADWAY","BROADWAY","BROADWAY","AMSTERDAM AVE","1ST AVE","1ST AVE","1ST AVE","1ST AVE","1ST AVE","BROADWAY","BROADWAY","BROADWAY","BROADWAY","BROADWAY","BROADWAY","W 48TH ST","WEST   45 STREET","10 AVENUE","10 AVENUE","10 AVENUE","WEST   45 STREET","WEST   45 STREET","10 AVENUE","WEST   45 STREET","9TH AVE","10 AVENUE","WEST   45 STREET","W 48TH ST","10 AVENUE","WEST   45 STREET","W 48TH ST","W 48TH ST","WEST   45 STREET","10 AVENUE","10 AVENUE","W 48TH ST","10 AVENUE","WEST   45 STREET","W 48TH ST","10 AVENUE","10 AVENUE","10 AVENUE","9TH AVE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","3RD AVE","3RD AVE","3RD AVE","3RD AVE","3RD AVE","3RD AVE","3RD AVE","3RD AVE","3RD AVE","3RD AVE"],"y":[9,6,7,12,12,6,10,11,7,13,5,10,12,12,13,13,12,7,10,13,10,7,7,10,13,12,12,2,7,2,8,6,3,12,12,13,12,10,12,11,11,10,6,13,12,7,12,7,4,9,7,9,6,12,7,4,12,8,5,7,13,10,12,11,13,10,12,12,13,12,9,13,12,11,0,6,2,13,9,7,10,7,12,10,12,12,13,13,7,10,9,9,10,7,10,7,11,12,11,8,11,10,6,7,0,13,13,12,11,12,12,12,12,13,8,12,7,13,12,10,8,6,13,13,9,8,12,12,12,13,5,13,13,13,2,13,10,12,12,12,13,12,5,12,9,7,9,11,13,11,13,12,2,13,10,7,13,12,12,7,11,6,9,8,11,7,13,10,13,9,11,12,11,11,8,12,12,13,10,10,6,12,10,10,10,13,13,12,5,12,13,10,13,5,13,13,6,9,13,11,13,11,2,12,12,12,12,10,12,11,11,13,12,9,12,8,12,8,11,12,8,9,7,13,10,10,11,12,12,7,13,12,8,3,9,9,11,12,3,12,10,13,13,9,13,12,12,13,6,12,13,7,6,12,6,12,12,9,11,11,11,7,9,8,12,12,9,11,7,11,8,7,11,9,10,9,10,8,11,11,10,7,11,11,8,13,13,7,7,13,11,5,11,13,5,13,8,8,8,10,10,11,11,8,12,12,12,10,12,12,12,11,11,10,10,10,10,11,10,11,12,10,12,11,10,12,5,10,13,11,12,6,12,12,11,4,10,13,13,11,2,10,12,12,11,12,8,10,9,9,12,10,11,10,13,9,12,8,10,8,11,12,13,10,10,13,11,11,11,9,6,9,7,10,2,8,7,11,9,10,7,11,11,10,11,11,10,11,12,12,7,12,9,13,11,11,12,10,7,13,13,10,9,7,13,7,12,9,7,7,8,12,12,10,13,13,10,7,9,9,10,11,10,13,6,11,10,11,6,6,10,9,11,7,9,13,9,11,9,9,9,9,9,9,11,11,9,12,11,10,10,12,12,12,11,11,11,11,12,10,11,11,12,11,11,11,12,13,13,12,13,12,13,4,6,6,13,13,13,12,12,12,12,11,11,12,12,10,9,10,13,10,10,13,12,12,9,10,12,8,11,13,12,10,8,10,10,12,10,12,12,8,12,10,12,12,8,10,10,12,12],"mode":"markers","text":["Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: GAONNURI<br />Grade: A","Name: THE KUNJIP<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: K TOWN<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: K TOWN<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: MARU<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: IDEA COFFEE<br />Grade: A","Name: BARN JOO 35<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: MARU<br />Grade: A","Name: BARN JOO 35<br />Grade: A","Name: GAONNURI<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: PANDA BANJUM<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: GAONNURI<br />Grade: A","Name: GAONNURI<br />Grade: A","Name: FOOD GALLERY 32<br />Grade: A","Name: BARN JOO 35<br />Grade: A","Name: BBQ OLIVE CHICKEN<br />Grade: A","Name: MARU<br />Grade: A","Name: GAONNURI<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: MADANGSUI<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: THE MAZE<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: IDEA COFFEE<br />Grade: A","Name: GAMMEEOK<br />Grade: A","Name: 5BAR KARAOKE<br />Grade: A","Name: E-MO KIMBAB<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: IDEA COFFEE<br />Grade: A","Name: E-MO KIMBAB<br />Grade: A","Name: THE KUNJIP<br />Grade: A","Name: TURNTABLE CHICKEN JAZZ<br />Grade: A","Name: MK KARAOKE<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: STARRY NIGHT<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: BARN JOO 35<br />Grade: A","Name: SPACE BILLARD<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: MARU<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: 5BAR KARAOKE<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: E-MO KIMBAB<br />Grade: A","Name: WOORIJIP<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: E-MO KIMBAB<br />Grade: A","Name: 5BAR KARAOKE<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: MARU<br />Grade: A","Name: MARU<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: K TOWN<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: K TOWN<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: WOORIJIP<br />Grade: A","Name: FOOD GALLERY 32<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: MADANGSUI<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: MK KARAOKE<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: SPACE BILLARD<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: SHANGHAI MONG<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: STARRY NIGHT<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: STARRY NIGHT<br />Grade: A","Name: WOORIJIP<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: IDEA COFFEE<br />Grade: A","Name: OSAMIL<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: SPACE BILLARD<br />Grade: A","Name: TURNTABLE CHICKEN JAZZ<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: JONGRO BBQ<br />Grade: A","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: THE KUNJIP<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: K TOWN<br />Grade: A","Name: WOORIJIP<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: THE KUNJIP<br />Grade: A","Name: MADANGSUI<br />Grade: A","Name: MADANGSUI<br />Grade: A","Name: GAONNURI<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: K TOWN<br />Grade: A","Name: GAMMEEOK<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: FOOD GALLERY 32<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: E-MO KIMBAB<br />Grade: A","Name: 5BAR KARAOKE<br />Grade: A","Name: THE KUNJIP<br />Grade: A","Name: MK KARAOKE<br />Grade: A","Name: K TOWN<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: MK KARAOKE<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: JONGRO BBQ<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: FOOD GALLERY 32<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: BBQ OLIVE CHICKEN<br />Grade: A","Name: MADANGSUI<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: MARU<br />Grade: A","Name: GAMMEEOK<br />Grade: A","Name: 5BAR KARAOKE<br />Grade: A","Name: FOOD GALLERY 32<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: E-MO KIMBAB<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: THE KUNJIP<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: OSAMIL<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: MANDOO BAR<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: TURNTABLE LP BAR<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: HAN BAT RESTAURANT<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: STARRY NIGHT<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: BBQ OLIVE CHICKEN<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: STARRY NIGHT<br />Grade: A","Name: MADANGSUI<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: NEW WONJO RESTAURANT<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: GAMMEEOK<br />Grade: A","Name: MK KARAOKE<br />Grade: A","Name: HEE KOREAN BBQ GRILL<br />Grade: A","Name: PANDA BANJUM<br />Grade: A","Name: JONGRO BBQ<br />Grade: A","Name: CHORUS MUSIC STUDIO/ CHORUS KARAOKE LOUNGE BAR<br />Grade: A","Name: IDEA COFFEE<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: BCD TOFU HOUSE<br />Grade: A","Name: GAMMEEOK<br />Grade: A","Name: IDEA COFFEE<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: MUKEUNJI II<br />Grade: A","Name: 5BAR KARAOKE<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: 5 SENSES<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: SPACE BILLARD<br />Grade: A","Name: HYO DONG GAK<br />Grade: A","Name: SEOUL GARDEN<br />Grade: A","Name: JONGRO BBQ<br />Grade: A","Name: THE SPOT KARAOKE LOUNGE<br />Grade: A","Name: CHO DANG GOL<br />Grade: A","Name: K TOWN<br />Grade: A","Name: DDM YUPDDUK<br />Grade: A","Name: FOOD GALLERY 32<br />Grade: A","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: A","Name: MISS KOREA BARBECUE ''SUN''<br />Grade: A","Name: POCHA 32<br />Grade: A","Name: OSAMIL<br />Grade: A","Name: MISS KOREA<br />Grade: A","Name: TO TWO BOONSIK<br />Grade: A","Name: TO TWO BOONSIK<br />Grade: A","Name: TO TWO BOONSIK<br />Grade: A","Name: TO TWO BOONSIK<br />Grade: A","Name: TO TWO BOONSIK<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: BOKA<br />Grade: A","Name: BOWLLIN'<br />Grade: A","Name: K'OOK<br />Grade: A","Name: OIJI<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: OIJI<br />Grade: A","Name: OIJI<br />Grade: A","Name: BOWLLIN'<br />Grade: A","Name: BOWLLIN'<br />Grade: A","Name: BARN JOO<br />Grade: A","Name: BOKA<br />Grade: A","Name: K'OOK<br />Grade: A","Name: K'OOK<br />Grade: A","Name: BOKA<br />Grade: A","Name: BOWLLIN'<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: BOWLLIN'<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: K'OOK<br />Grade: A","Name: BOKA<br />Grade: A","Name: BOWLLIN'<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: K'OOK<br />Grade: A","Name: BOKA<br />Grade: A","Name: K'OOK<br />Grade: A","Name: KORILLA EAST VILLAGE<br />Grade: A","Name: GUNBAE<br />Grade: A","Name: GUNBAE<br />Grade: A","Name: GUNBAE<br />Grade: A","Name: GUNBAE<br />Grade: A","Name: HANJAN<br />Grade: A","Name: HANJAN<br />Grade: A","Name: HANJAN<br />Grade: A","Name: HANJAN<br />Grade: A","Name: HANJAN<br />Grade: A","Name: HANJAN<br />Grade: A","Name: HANJAN<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: MOKBAR<br />Grade: A","Name: KBBQ<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: CBAO ASIAN BUNS & MORE<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: CBAO ASIAN BUNS & MORE<br />Grade: A","Name: KORI TRIBECA<br />Grade: A","Name: KORI TRIBECA<br />Grade: A","Name: KORI TRIBECA<br />Grade: A","Name: KORI TRIBECA<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: OPPA<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: OPPA<br />Grade: A","Name: CBAO ASIAN BUNS & MORE<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: KORI TRIBECA<br />Grade: A","Name: KORI TRIBECA<br />Grade: A","Name: JUNG SIK<br />Grade: A","Name: DO HWA<br />Grade: A","Name: OPPA<br />Grade: A","Name: DO HWA<br />Grade: A","Name: KARAOKE BOHO<br />Grade: A","Name: DO HWA<br />Grade: A","Name: DO HWA<br />Grade: A","Name: KARAOKE BOHO<br />Grade: A","Name: DO HWA<br />Grade: A","Name: DO HWA<br />Grade: A","Name: DO HWA<br />Grade: A","Name: KARAOKE BOHO<br />Grade: A","Name: DO HWA<br />Grade: A","Name: KARAOKE BOHO<br />Grade: A","Name: KARAOKE BOHO<br />Grade: A","Name: DO HWA<br />Grade: A","Name: KARAOKE BOHO<br />Grade: A","Name: DO HWA<br />Grade: A","Name: DO HWA<br />Grade: A","Name: HAN GAWI<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: BREAD & BUTTER<br />Grade: A","Name: HAN GAWI<br />Grade: A","Name: BANGIA<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: HER NAME IS HAN<br />Grade: A","Name: BONCHON<br />Grade: A","Name: HAN GAWI<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: BONCHON<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: BREAD & BUTTER<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: HER NAME IS HAN<br />Grade: A","Name: HER NAME IS HAN<br />Grade: A","Name: BANGIA<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: BONCHON<br />Grade: A","Name: BANGIA<br />Grade: A","Name: HER NAME IS HAN<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: BONCHON<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: BANGIA<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: BONCHON<br />Grade: A","Name: THRID FLOOR CAFE<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: THRID FLOOR CAFE<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: HAN GAWI<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: TAKE 31<br />Grade: A","Name: BREAD & BUTTER<br />Grade: A","Name: HER NAME IS HAN<br />Grade: A","Name: SOJU HAUS<br />Grade: A","Name: HAN GAWI<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: BREAD & BUTTER<br />Grade: A","Name: BAEKJEONG<br />Grade: A","Name: HAN GAWI<br />Grade: A","Name: BONCHON<br />Grade: A","Name: FRANCHIA<br />Grade: A","Name: TOPOKEE<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: JUDY<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: GOGI 37<br />Grade: A","Name: TOPOKEE<br />Grade: A","Name: TOPOKEE<br />Grade: A","Name: GOGI 37<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: KRISTALBELLI<br />Grade: A","Name: BANN<br />Grade: A","Name: BANN<br />Grade: A","Name: DANJI<br />Grade: A","Name: DANJI<br />Grade: A","Name: K-BAP<br />Grade: A","Name: DANJI<br />Grade: A","Name: DANJI<br />Grade: A","Name: BANN<br />Grade: A","Name: DANJI<br />Grade: A","Name: BANN<br />Grade: A","Name: BANN<br />Grade: A","Name: DANJI<br />Grade: A","Name: BANN<br />Grade: A","Name: DANJI<br />Grade: A","Name: K-BAP<br />Grade: A","Name: BANN<br />Grade: A","Name: K-BAP<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: KBBQ<br />Grade: A","Name: KBBQ<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: SPA CASTLE PREMIER<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MILL KOREAN RESTAURANT<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: MOKJA<br />Grade: A","Name: GOGO-GI<br />Grade: A","Name: GOGO-GI<br />Grade: A","Name: GOGO-GI<br />Grade: A","Name: GOGO-GI<br />Grade: A","Name: GOGO-GI<br />Grade: A","Name: GOGO-GI<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: RED POKE<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: AMBROSIA<br />Grade: A","Name: NEW YORK KIMCHI<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: HELL'S CHICKEN<br />Grade: A","Name: RED POKE<br />Grade: A","Name: KOREAN TAKE OUT EXPRESS<br />Grade: A","Name: KOREAN TAKE OUT EXPRESS<br />Grade: A","Name: KOREAN TAKE OUT EXPRESS<br />Grade: A","Name: KOREAN TAKE OUT EXPRESS<br />Grade: A","Name: KOREAN TAKE OUT EXPRESS<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A","Name: MAROO<br />Grade: A"],"type":"scatter","name":"A","marker":{"color":"rgba(102,194,165,0.5)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,0.5)"},"error_y":{"color":"rgba(102,194,165,0.5)"},"error_x":{"color":"rgba(102,194,165,0.5)"},"line":{"color":"rgba(102,194,165,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   35 STREET","WEST   35 STREET","WEST   32 STREET","W 32ND ST","WEST   35 STREET","W 33 STREET","WEST   32 STREET","W 32ND ST","BROADWAY","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","BROADWAY","WEST   32 STREET","W 32ND ST","WEST   32 STREET","BROADWAY","W 33 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   35 STREET","WEST   35 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   35 STREET","W 32ND ST","BROADWAY","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST 32 STREET","W 32ND ST","WEST   35 STREET","WEST   35 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","WEST   35 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   35 STREET","WEST   32 STREET","WEST   35 STREET","W 33 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","WEST   32 STREET","W 32ND ST","W 33 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","W 33 STREET","W 33 STREET","W 32ND ST","W 32ND ST","WEST   35 STREET","WEST 32 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","W 32ND ST","W 32ND ST","W 32ND ST","W 32ND ST","WEST   35 STREET","W 32ND ST","W 32ND ST","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","W 33 STREET","W 32ND ST","WEST 32 STREET","WEST   32 STREET","WEST   32 STREET","WEST   32 STREET","W 32ND ST","W 32ND ST","SAINT MARKS PLACE","1ST AVE","3RD AVE","SAINT MARKS PLACE","SAINT MARKS PLACE","1ST AVE","SAINT MARKS PLACE","3RD AVE","1ST AVE","SAINT MARKS PLACE","1ST AVE","SAINT MARKS PLACE","SAINT MARKS PLACE","SAINT MARKS PLACE","1ST AVE","SAINT MARKS PLACE","1ST AVE","SAINT MARKS PLACE","3RD AVE","BROADWAY","BROADWAY","BROADWAY","BROADWAY","WEST   26 STREET","WEST   26 STREET","WEST   26 STREET","9TH AVE","9TH AVE","CHURCH ST","CHURCH ST","CHURCH ST","CHURCH ST","CHURCH ST","CARMINE STREET","CARMINE STREET","5TH AVE","5TH AVE","5TH AVE","EAST   32 STREET","EAST   32 STREET","EAST   32 STREET","5TH AVE","EAST   32 STREET","5TH AVE","EAST   32 STREET","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE","EAST   32 STREET","5TH AVE","5TH AVE","5TH AVE","WEST   36 STREET","W 39TH ST","W 39TH ST","WEST   36 STREET","W 39TH ST","W 39TH ST","E 57TH ST","E 57TH ST","E 57TH ST","E 57TH ST","W 48TH ST","WEST   45 STREET","WEST   45 STREET","WEST   45 STREET","WEST   45 STREET","W 48TH ST","W 48TH ST","WEST   45 STREET","WEST   45 STREET","W 48TH ST","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","LEXINGTON AVENUE","3RD AVE","3RD AVE","3RD AVE","3RD AVE"],"y":[14,14,26,25,27,21,25,25,21,22,26,19,21,25,27,22,21,21,27,23,23,27,23,23,25,24,25,14,14,26,22,17,17,17,21,19,17,24,19,17,27,27,26,24,22,17,25,20,20,24,25,25,22,17,25,25,17,23,17,25,27,21,22,22,20,26,23,22,25,17,24,24,24,17,21,25,17,27,19,23,25,25,17,24,24,27,25,17,17,20,25,26,19,20,17,23,19,23,24,23,17,17,25,27,21,26,25,27,26,21,27,25,27,25,26,25,27,26,27,26,21,20,20,20,20,15,15,15,17,17,22,22,22,22,22,18,18,24,14,24,18,18,18,14,18,17,18,24,14,24,14,14,18,24,17,17,15,20,20,15,20,20,21,21,21,21,26,16,15,16,15,26,26,15,16,26,26,26,26,26,14,14,14,26,18,18,18,18],"mode":"markers","text":["Name: MADANGSUI<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: SHANGHAI MONG<br />Grade: B","Name: GAONNURI<br />Grade: B","Name: MK KARAOKE<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: GAONNURI<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: GAMMEEOK<br />Grade: B","Name: MK KARAOKE<br />Grade: B","Name: GAONNURI<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: GAMMEEOK<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: GAMMEEOK<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: SHANGHAI MONG<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: BCD TOFU HOUSE<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: CHO DANG GOL<br />Grade: B","Name: MARU<br />Grade: B","Name: GAONNURI<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: THE KUNJIP<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: POCHA 32<br />Grade: B","Name: THE KUNJIP<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: BCD TOFU HOUSE<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: BCD TOFU HOUSE<br />Grade: B","Name: CHO DANG GOL<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: MARU<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: CHO DANG GOL<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: BCD TOFU HOUSE<br />Grade: B","Name: MK KARAOKE<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: MK KARAOKE<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: MARU<br />Grade: B","Name: MADANGSUI<br />Grade: B","Name: POCHA 32<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: SHANGHAI MONG<br />Grade: B","Name: MARU<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: GAMMEEOK<br />Grade: B","Name: SHANGHAI MONG<br />Grade: B","Name: CHO DANG GOL<br />Grade: B","Name: MARU<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: SHILLA KOREAN BARBECUE HOUSE<br />Grade: B","Name: JONGRO BBQ<br />Grade: B","Name: STARRY NIGHT<br />Grade: B","Name: FOOD GALLERY 32<br />Grade: B","Name: POCHA 32<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: MUKEUNJI II<br />Grade: B","Name: SEOUL GARDEN<br />Grade: B","Name: MARU<br />Grade: B","Name: THE KUNJIP<br />Grade: B","Name: BOKA<br />Grade: B","Name: OIJI<br />Grade: B","Name: KORILLA EAST VILLAGE<br />Grade: B","Name: BOKA<br />Grade: B","Name: BOKA<br />Grade: B","Name: OIJI<br />Grade: B","Name: BOKA<br />Grade: B","Name: KORILLA EAST VILLAGE<br />Grade: B","Name: OIJI<br />Grade: B","Name: BOKA<br />Grade: B","Name: OIJI<br />Grade: B","Name: BOKA<br />Grade: B","Name: BOKA<br />Grade: B","Name: BOKA<br />Grade: B","Name: OIJI<br />Grade: B","Name: BOKA<br />Grade: B","Name: OIJI<br />Grade: B","Name: BOKA<br />Grade: B","Name: KORILLA EAST VILLAGE<br />Grade: B","Name: APPLE GOURMET<br />Grade: B","Name: APPLE GOURMET<br />Grade: B","Name: APPLE GOURMET<br />Grade: B","Name: APPLE GOURMET<br />Grade: B","Name: HANJAN<br />Grade: B","Name: HANJAN<br />Grade: B","Name: HANJAN<br />Grade: B","Name: MOKBAR<br />Grade: B","Name: MOKBAR<br />Grade: B","Name: KORI TRIBECA<br />Grade: B","Name: KORI TRIBECA<br />Grade: B","Name: KORI TRIBECA<br />Grade: B","Name: KORI TRIBECA<br />Grade: B","Name: KORI TRIBECA<br />Grade: B","Name: DO HWA<br />Grade: B","Name: DO HWA<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: BAEKJEONG<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: HAN GAWI<br />Grade: B","Name: HAN GAWI<br />Grade: B","Name: HAN GAWI<br />Grade: B","Name: BAEKJEONG<br />Grade: B","Name: HAN GAWI<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: HAN GAWI<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: BONCHON<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: BONCHON<br />Grade: B","Name: BAEKJEONG<br />Grade: B","Name: HAN GAWI<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: BREAD & BUTTER<br />Grade: B","Name: KRISTALBELLI<br />Grade: B","Name: TOPOKEE<br />Grade: B","Name: TOPOKEE<br />Grade: B","Name: KRISTALBELLI<br />Grade: B","Name: TOPOKEE<br />Grade: B","Name: TOPOKEE<br />Grade: B","Name: SPA CASTLE PREMIER<br />Grade: B","Name: SPA CASTLE PREMIER<br />Grade: B","Name: SPA CASTLE PREMIER<br />Grade: B","Name: SPA CASTLE PREMIER<br />Grade: B","Name: NEW YORK KIMCHI<br />Grade: B","Name: AMBROSIA<br />Grade: B","Name: AMBROSIA<br />Grade: B","Name: AMBROSIA<br />Grade: B","Name: AMBROSIA<br />Grade: B","Name: NEW YORK KIMCHI<br />Grade: B","Name: NEW YORK KIMCHI<br />Grade: B","Name: AMBROSIA<br />Grade: B","Name: AMBROSIA<br />Grade: B","Name: NEW YORK KIMCHI<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: KOREAN TAKE OUT EXPRESS<br />Grade: B","Name: MAROO<br />Grade: B","Name: MAROO<br />Grade: B","Name: MAROO<br />Grade: B","Name: MAROO<br />Grade: B"],"type":"scatter","name":"B","marker":{"color":"rgba(252,141,98,0.5)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,0.5)"},"error_y":{"color":"rgba(252,141,98,0.5)"},"error_x":{"color":"rgba(252,141,98,0.5)"},"line":{"color":"rgba(252,141,98,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 32ND ST","WEST   35 STREET","WEST   35 STREET","W 32ND ST","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","W 32ND ST","W 32ND ST","W 32ND ST","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","HARRISON STREET","CHURCH ST","HARRISON STREET","CHURCH ST","HARRISON STREET","CHURCH ST","CHURCH ST","CHURCH ST","CHURCH ST","HARRISON STREET","CHURCH ST","CHURCH ST","CHURCH ST"],"y":[36,40,47,36,40,47,47,47,40,40,40,36,36,36,47,40,40,45,35,45,35,45,35,35,35,35,45,35,35,35],"mode":"markers","text":["Name: MARU<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MARU<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MARU<br />Grade: C","Name: MARU<br />Grade: C","Name: MARU<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: MADANGSUI<br />Grade: C","Name: JUNG SIK<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: JUNG SIK<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: JUNG SIK<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: JUNG SIK<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: KORI TRIBECA<br />Grade: C","Name: KORI TRIBECA<br />Grade: C"],"type":"scatter","name":"C","marker":{"color":"rgba(141,160,203,0.5)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,0.5)"},"error_y":{"color":"rgba(141,160,203,0.5)"},"error_x":{"color":"rgba(141,160,203,0.5)"},"line":{"color":"rgba(141,160,203,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1ST AVE","1ST AVE","1ST AVE","E 23RD ST","E 23RD ST","E 23RD ST","E 23RD ST"],"y":[84,84,84,23,23,23,23],"mode":"markers","text":["Name: SPACE MABI<br />Grade: Not Yet Graded","Name: SPACE MABI<br />Grade: Not Yet Graded","Name: SPACE MABI<br />Grade: Not Yet Graded","Name: NEW YORK KIMCHI<br />Grade: Not Yet Graded","Name: NEW YORK KIMCHI<br />Grade: Not Yet Graded","Name: NEW YORK KIMCHI<br />Grade: Not Yet Graded","Name: NEW YORK KIMCHI<br />Grade: Not Yet Graded"],"type":"scatter","name":"Not Yet Graded","marker":{"color":"rgba(231,138,195,0.5)","line":{"color":"rgba(231,138,195,1)"}},"textfont":{"color":"rgba(231,138,195,0.5)"},"error_y":{"color":"rgba(231,138,195,0.5)"},"error_x":{"color":"rgba(231,138,195,0.5)"},"line":{"color":"rgba(231,138,195,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 32ND ST","W 32ND ST","WEST   35 STREET","UNION SQ W","UNION SQ W","WEST   26 STREET","WEST   26 STREET"],"y":[9,9,2,4,4,10,10],"mode":"markers","text":["Name: DDM YUPDDUK<br />Grade: P","Name: DDM YUPDDUK<br />Grade: P","Name: MADANGSUI<br />Grade: P","Name: BARN JOO<br />Grade: P","Name: BARN JOO<br />Grade: P","Name: HANJAN<br />Grade: P","Name: HANJAN<br />Grade: P"],"type":"scatter","name":"P","marker":{"color":"rgba(166,216,84,0.5)","line":{"color":"rgba(166,216,84,1)"}},"textfont":{"color":"rgba(166,216,84,0.5)"},"error_y":{"color":"rgba(166,216,84,0.5)"},"error_x":{"color":"rgba(166,216,84,0.5)"},"line":{"color":"rgba(166,216,84,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","WEST   35 STREET","3RD AVE","3RD AVE","SAINT MARKS PLACE","3RD AVE","3RD AVE","SAINT MARKS PLACE","SAINT MARKS PLACE","3RD AVE","3RD AVE","3RD AVE","SAINT MARKS PLACE","3RD AVE","SAINT MARKS PLACE","BOWERY","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE","5TH AVE"],"y":[22,22,22,22,66,66,25,66,66,25,25,66,66,66,25,66,25,2,45,45,45,45,45,45,45],"mode":"markers","text":["Name: HAN BAT RESTAURANT<br />Grade: Z","Name: HAN BAT RESTAURANT<br />Grade: Z","Name: HAN BAT RESTAURANT<br />Grade: Z","Name: HAN BAT RESTAURANT<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: BOKA<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: BOKA<br />Grade: Z","Name: BOKA<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: BOKA<br />Grade: Z","Name: KORILLA EAST VILLAGE<br />Grade: Z","Name: BOKA<br />Grade: Z","Name: TOFU TOFU<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z","Name: BREAD & BUTTER<br />Grade: Z"],"type":"scatter","name":"Z","marker":{"color":"rgba(255,217,47,0.5)","line":{"color":"rgba(255,217,47,1)"}},"textfont":{"color":"rgba(255,217,47,0.5)"},"error_y":{"color":"rgba(255,217,47,0.5)"},"error_x":{"color":"rgba(255,217,47,0.5)"},"line":{"color":"rgba(255,217,47,0.5)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="boxplot-score-of-korean-restauratns-in-different-streets" class="section level2">
+<h2>Boxplot: score of korean restauratns in different streets</h2>
+<pre class="r"><code>rest_inspec %&gt;%
+  mutate(street = fct_reorder(street, score)) %&gt;%
+  plot_ly(y = ~score, color = ~street, type = &quot;box&quot;, colors = &quot;viridis&quot;)</code></pre>
+<div id="htmlwidget-9d788f00d8b84bd995a0" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9d788f00d8b84bd995a0">{"x":{"visdat":{"7c5867544953":["function () ","plotlyVisDat"]},"cur_data":"7c5867544953","attrs":{"7c5867544953":{"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"box"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"score"},"xaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"fillcolor":"rgba(68,1,84,0.5)","y":[2],"type":"box","name":"BOWERY","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"line":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(70,9,92,0.5)","y":[4,7,4],"type":"box","name":"UNION SQ W","marker":{"color":"rgba(70,9,92,1)","line":{"color":"rgba(70,9,92,1)"}},"line":{"color":"rgba(70,9,92,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(71,17,100,0.5)","y":[5],"type":"box","name":"W 14TH ST","marker":{"color":"rgba(71,17,100,1)","line":{"color":"rgba(71,17,100,1)"}},"line":{"color":"rgba(71,17,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(72,24,106,0.5)","y":[10,6,7,10,7,10,7,7],"type":"box","name":"PARK AVENUE","marker":{"color":"rgba(72,24,106,1)","line":{"color":"rgba(72,24,106,1)"}},"line":{"color":"rgba(72,24,106,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(72,31,112,0.5)","y":[9,9,7,7],"type":"box","name":"E 32ND ST","marker":{"color":"rgba(72,31,112,1)","line":{"color":"rgba(72,31,112,1)"}},"line":{"color":"rgba(72,31,112,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(72,38,119,0.5)","y":[11,8,7,8,7,11],"type":"box","name":"E 6TH ST","marker":{"color":"rgba(72,38,119,1)","line":{"color":"rgba(72,38,119,1)"}},"line":{"color":"rgba(72,38,119,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(71,45,123,0.5)","y":[8],"type":"box","name":"SPRING ST","marker":{"color":"rgba(71,45,123,1)","line":{"color":"rgba(71,45,123,1)"}},"line":{"color":"rgba(71,45,123,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(70,51,127,0.5)","y":[8,8],"type":"box","name":"W 33RD ST","marker":{"color":"rgba(70,51,127,1)","line":{"color":"rgba(70,51,127,1)"}},"line":{"color":"rgba(70,51,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(68,58,131,0.5)","y":[9,9],"type":"box","name":"LEXINGTON AVE","marker":{"color":"rgba(68,58,131,1)","line":{"color":"rgba(68,58,131,1)"}},"line":{"color":"rgba(68,58,131,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(66,64,134,0.5)","y":[7,15,12,9,7,7,15,12,12,7,9],"type":"box","name":"WEST   36 STREET","marker":{"color":"rgba(66,64,134,1)","line":{"color":"rgba(66,64,134,1)"}},"line":{"color":"rgba(66,64,134,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(64,70,136,0.5)","y":[9,10,10,6,6,9,9],"type":"box","name":"WEST   50 STREET","marker":{"color":"rgba(64,70,136,1)","line":{"color":"rgba(64,70,136,1)"}},"line":{"color":"rgba(64,70,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(62,76,138,0.5)","y":[13,6,4,13,13,2],"type":"box","name":"WEST    4 STREET","marker":{"color":"rgba(62,76,138,1)","line":{"color":"rgba(62,76,138,1)"}},"line":{"color":"rgba(62,76,138,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(59,82,139,0.5)","y":[12,12,12,12,9,10,9,10,8,12,10,8],"type":"box","name":"10 AVENUE","marker":{"color":"rgba(59,82,139,1)","line":{"color":"rgba(59,82,139,1)"}},"line":{"color":"rgba(59,82,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(56,88,140,0.5)","y":[8,8,17,17,8,10,10,11,11,10,10],"type":"box","name":"9TH AVE","marker":{"color":"rgba(56,88,140,1)","line":{"color":"rgba(56,88,140,1)"}},"line":{"color":"rgba(56,88,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(54,93,141,0.5)","y":[45,45,10,45,10,10,10,10,45,10,10,10],"type":"box","name":"HARRISON STREET","marker":{"color":"rgba(54,93,141,1)","line":{"color":"rgba(54,93,141,1)"}},"line":{"color":"rgba(54,93,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(51,99,141,0.5)","y":[13,13,7,7],"type":"box","name":"MURRAY ST","marker":{"color":"rgba(51,99,141,1)","line":{"color":"rgba(51,99,141,1)"}},"line":{"color":"rgba(51,99,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(49,104,142,0.5)","y":[10,10],"type":"box","name":"W 37TH ST","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"line":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(46,109,142,0.5)","y":[11,9,11,9,9,11],"type":"box","name":"WAVERLY PL","marker":{"color":"rgba(46,109,142,1)","line":{"color":"rgba(46,109,142,1)"}},"line":{"color":"rgba(46,109,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(44,114,142,0.5)","y":[10,7,7,7,10,7,11,8,24,14,24,11,45,13,45,9,8,10,8,11,14,13,10,13,11,17,45,9,45,8,24,14,11,9,24,45,11,11,45,45,10,11,14,11,10,11,14,13,11,24,17,13,13,17,9,8],"type":"box","name":"5TH AVE","marker":{"color":"rgba(44,114,142,1)","line":{"color":"rgba(44,114,142,1)"}},"line":{"color":"rgba(44,114,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(42,119,142,0.5)","y":[13,11,9,11,13,11,11,11,9],"type":"box","name":"6TH AVE","marker":{"color":"rgba(42,119,142,1)","line":{"color":"rgba(42,119,142,1)"}},"line":{"color":"rgba(42,119,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(40,124,142,0.5)","y":[6,12,6,12,12,11,11],"type":"box","name":"CANAL ST","marker":{"color":"rgba(40,124,142,1)","line":{"color":"rgba(40,124,142,1)"}},"line":{"color":"rgba(40,124,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(38,130,142,0.5)","y":[10,11,11,10,11],"type":"box","name":"E 31ST ST","marker":{"color":"rgba(38,130,142,1)","line":{"color":"rgba(38,130,142,1)"}},"line":{"color":"rgba(38,130,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(36,134,142,0.5)","y":[9,11,9,9,21,21,9,9,21,11,21,11,9],"type":"box","name":"E 57TH ST","marker":{"color":"rgba(36,134,142,1)","line":{"color":"rgba(36,134,142,1)"}},"line":{"color":"rgba(36,134,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(34,139,141,0.5)","y":[11,10,6,11,11,10,11],"type":"box","name":"WEST   52 STREET","marker":{"color":"rgba(34,139,141,1)","line":{"color":"rgba(34,139,141,1)"}},"line":{"color":"rgba(34,139,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(33,144,141,0.5)","y":[66,9,66,66,21,66,9,8,66,66,66,10,10,21,10,66,8,21,8,12,10,18,12,12,8,18,10,18,10,18,12,12],"type":"box","name":"3RD AVE","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"line":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(31,149,139,0.5)","y":[11,12,12,12,11,11,12,12],"type":"box","name":"AMSTERDAM AVE","marker":{"color":"rgba(31,149,139,1)","line":{"color":"rgba(31,149,139,1)"}},"line":{"color":"rgba(31,149,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(31,154,138,0.5)","y":[12,12,3,12,21,12,21,21,21,12,20,20,20,20,12,10,10,12,11,11,11,11,10,11,11,11,13,4,6,6,13,13],"type":"box","name":"BROADWAY","marker":{"color":"rgba(31,154,138,1)","line":{"color":"rgba(31,154,138,1)"}},"line":{"color":"rgba(31,154,138,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(31,159,136,0.5)","y":[12,10,11,12,12,12,11,18,10,11,10,18,12],"type":"box","name":"CARMINE STREET","marker":{"color":"rgba(31,159,136,1)","line":{"color":"rgba(31,159,136,1)"}},"line":{"color":"rgba(31,159,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(32,164,134,0.5)","y":[12,9,12,12,12,2,12,12,9],"type":"box","name":"EAST   31 STREET","marker":{"color":"rgba(32,164,134,1)","line":{"color":"rgba(32,164,134,1)"}},"line":{"color":"rgba(32,164,134,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(35,169,131,0.5)","y":[12,12],"type":"box","name":"MACDOUGAL ST","marker":{"color":"rgba(35,169,131,1)","line":{"color":"rgba(35,169,131,1)"}},"line":{"color":"rgba(35,169,131,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(39,173,129,0.5)","y":[12,11,13,12,25,12,36,10,2,7,2,12,25,12,10,10,6,12,27,4,9,9,27,23,6,4,12,9,27,9,23,36,25,24,10,12,11,2,17,7,10,17,10,12,17,7,9,10,10,17,11,10,0,24,17,20,20,10,25,25,17,36,23,13,36,12,5,2,10,13,20,12,9,7,23,11,25,2,36,10,24,24,11,6,8,11,7,12,12,25,12,10,17,6,10,10,10,5,5,6,12,25,17,24,24,27,25,17,12,20,7,13,12,12,11,3,20,13,23,12,12,6,17,17],"type":"box","name":"W 32ND ST","marker":{"color":"rgba(39,173,129,1)","line":{"color":"rgba(39,173,129,1)"}},"line":{"color":"rgba(39,173,129,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(46,179,124,0.5)","y":[15,13,11,5,11,13,10,10,5,13,15,15],"type":"box","name":"WEST   26 STREET","marker":{"color":"rgba(46,179,124,1)","line":{"color":"rgba(46,179,124,1)"}},"line":{"color":"rgba(46,179,124,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(53,183,121,0.5)","y":[9,7,10,7,5,10,26,12,13,7,10,7,7,8,6,25,22,26,19,13,12,7,25,22,7,23,12,23,5,7,10,25,11,13,26,6,22,13,9,7,19,13,24,10,7,7,11,8,6,7,26,13,12,22,11,12,25,8,12,12,24,25,22,25,6,13,25,8,12,13,13,13,13,22,22,12,5,26,13,13,22,12,13,7,13,12,7,9,10,24,13,9,8,13,10,13,13,12,10,13,13,9,23,25,11,2,12,12,10,13,12,8,12,8,8,25,10,11,12,13,8,3,12,26,10,19,13,23,24,13,13,23,7],"type":"box","name":"WEST   32 STREET","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"line":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(62,188,116,0.5)","y":[16,15,12,16,15,11,11,12,10,10,15,12,16,11],"type":"box","name":"WEST   45 STREET","marker":{"color":"rgba(62,188,116,1)","line":{"color":"rgba(62,188,116,1)"}},"line":{"color":"rgba(62,188,116,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(71,193,110,0.5)","y":[12,12,0,12,19,12,12,19,12,19,12],"type":"box","name":"WEST 32 STREET","marker":{"color":"rgba(71,193,110,1)","line":{"color":"rgba(71,193,110,1)"}},"line":{"color":"rgba(71,193,110,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(82,197,105,0.5)","y":[12,12,12],"type":"box","name":"WORTH ST","marker":{"color":"rgba(82,197,105,1)","line":{"color":"rgba(82,197,105,1)"}},"line":{"color":"rgba(82,197,105,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(93,200,99,0.5)","y":[13,13,13],"type":"box","name":"W 31ST ST","marker":{"color":"rgba(93,200,99,1)","line":{"color":"rgba(93,200,99,1)"}},"line":{"color":"rgba(93,200,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(104,205,91,0.5)","y":[13,13,13,13],"type":"box","name":"W 35TH ST","marker":{"color":"rgba(104,205,91,1)","line":{"color":"rgba(104,205,91,1)"}},"line":{"color":"rgba(104,205,91,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(117,208,84,0.5)","y":[26,13,13,26,13,26,12,12,13,26],"type":"box","name":"W 48TH ST","marker":{"color":"rgba(117,208,84,1)","line":{"color":"rgba(117,208,84,1)"}},"line":{"color":"rgba(117,208,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(130,211,77,0.5)","y":[13,7,13],"type":"box","name":"W 56TH ST","marker":{"color":"rgba(130,211,77,1)","line":{"color":"rgba(130,211,77,1)"}},"line":{"color":"rgba(130,211,77,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(143,214,68,0.5)","y":[6,14,14,6,22,40,12,27,11,47,40,12,14,22,12,13,14,17,12,22,13,9,47,27,12,27,47,12,12,47,40,40,17,40,9,17,27,13,12,12,9,11,12,47,13,11,11,27,2,12,13,13,22,11,11,40,9,12,17,9,9,12,9,40],"type":"box","name":"WEST   35 STREET","marker":{"color":"rgba(143,214,68,1)","line":{"color":"rgba(143,214,68,1)"}},"line":{"color":"rgba(143,214,68,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(157,217,59,0.5)","y":[26,26,10,26,26,14,12,10,12,12,14,14,26],"type":"box","name":"LEXINGTON AVENUE","marker":{"color":"rgba(157,217,59,1)","line":{"color":"rgba(157,217,59,1)"}},"line":{"color":"rgba(157,217,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(170,220,50,0.5)","y":[12,10,18,18,10,18,18,18,12,18,12,10],"type":"box","name":"EAST   32 STREET","marker":{"color":"rgba(170,220,50,1)","line":{"color":"rgba(170,220,50,1)"}},"line":{"color":"rgba(170,220,50,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(185,222,41,0.5)","y":[21,21,13,12,13,21,17,17,21,13,12,17],"type":"box","name":"W 33 STREET","marker":{"color":"rgba(185,222,41,1)","line":{"color":"rgba(185,222,41,1)"}},"line":{"color":"rgba(185,222,41,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(199,224,32,0.5)","y":[13,20,20,20,13,13,20],"type":"box","name":"W 39TH ST","marker":{"color":"rgba(199,224,32,1)","line":{"color":"rgba(199,224,32,1)"}},"line":{"color":"rgba(199,224,32,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(213,226,26,0.5)","y":[35,22,35,12,35,12,35,11,35,11,22,35,35,22,22,35,35,22,12,11],"type":"box","name":"CHURCH ST","marker":{"color":"rgba(213,226,26,1)","line":{"color":"rgba(213,226,26,1)"}},"line":{"color":"rgba(213,226,26,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(227,228,24,0.5)","y":[23,23,23,23],"type":"box","name":"E 23RD ST","marker":{"color":"rgba(227,228,24,1)","line":{"color":"rgba(227,228,24,1)"}},"line":{"color":"rgba(227,228,24,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(240,229,29,0.5)","y":[11,25,25,25,25,26,11,11,25,26,25,11,25,25,26,25,11,25,26,26],"type":"box","name":"SAINT MARKS PLACE","marker":{"color":"rgba(240,229,29,1)","line":{"color":"rgba(240,229,29,1)"}},"line":{"color":"rgba(240,229,29,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(253,231,37,0.5)","y":[27,7,12,84,12,27,27,27,84,27,84,27,13,13,12,13,12],"type":"box","name":"1ST AVE","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"line":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="barchart-count-of-korean-restaurants-in-a-specific-street" class="section level2">
+<h2>Barchart: count of korean restaurants in a specific street</h2>
+<pre class="r"><code>rest_inspec %&gt;%
+  count(street) %&gt;%
+  mutate(street = fct_reorder(street, n)) %&gt;%
+  plot_ly(x = ~street, y = ~n, color = ~street, type = &quot;bar&quot;, colors = &quot;viridis&quot;)</code></pre>
+<div id="htmlwidget-e9065be737c2c31fa45f" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9065be737c2c31fa45f">{"x":{"visdat":{"7c5867ef4ecc":["function () ","plotlyVisDat"]},"cur_data":"7c5867ef4ecc","attrs":{"7c5867ef4ecc":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"street","type":"category","categoryorder":"array","categoryarray":["BOWERY","SPRING ST","W 14TH ST","LEXINGTON AVE","MACDOUGAL ST","W 33RD ST","W 37TH ST","UNION SQ W","W 31ST ST","W 56TH ST","WORTH ST","E 23RD ST","E 32ND ST","MURRAY ST","W 35TH ST","E 31ST ST","E 6TH ST","WAVERLY PL","WEST    4 STREET","CANAL ST","W 39TH ST","WEST   50 STREET","WEST   52 STREET","AMSTERDAM AVE","PARK AVENUE","6TH AVE","EAST   31 STREET","W 48TH ST","9TH AVE","WEST   36 STREET","WEST 32 STREET","10 AVENUE","EAST   32 STREET","HARRISON STREET","W 33 STREET","WEST   26 STREET","CARMINE STREET","E 57TH ST","LEXINGTON AVENUE","WEST   45 STREET","1ST AVE","CHURCH ST","SAINT MARKS PLACE","3RD AVE","BROADWAY","5TH AVE","WEST   35 STREET","W 32ND ST","WEST   32 STREET"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"n"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["BOWERY"],"y":[1],"type":"bar","name":"BOWERY","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["SPRING ST"],"y":[1],"type":"bar","name":"SPRING ST","marker":{"color":"rgba(70,9,92,1)","line":{"color":"rgba(70,9,92,1)"}},"textfont":{"color":"rgba(70,9,92,1)"},"error_y":{"color":"rgba(70,9,92,1)"},"error_x":{"color":"rgba(70,9,92,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 14TH ST"],"y":[1],"type":"bar","name":"W 14TH ST","marker":{"color":"rgba(71,17,100,1)","line":{"color":"rgba(71,17,100,1)"}},"textfont":{"color":"rgba(71,17,100,1)"},"error_y":{"color":"rgba(71,17,100,1)"},"error_x":{"color":"rgba(71,17,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["LEXINGTON AVE"],"y":[2],"type":"bar","name":"LEXINGTON AVE","marker":{"color":"rgba(72,24,106,1)","line":{"color":"rgba(72,24,106,1)"}},"textfont":{"color":"rgba(72,24,106,1)"},"error_y":{"color":"rgba(72,24,106,1)"},"error_x":{"color":"rgba(72,24,106,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["MACDOUGAL ST"],"y":[2],"type":"bar","name":"MACDOUGAL ST","marker":{"color":"rgba(72,31,112,1)","line":{"color":"rgba(72,31,112,1)"}},"textfont":{"color":"rgba(72,31,112,1)"},"error_y":{"color":"rgba(72,31,112,1)"},"error_x":{"color":"rgba(72,31,112,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 33RD ST"],"y":[2],"type":"bar","name":"W 33RD ST","marker":{"color":"rgba(72,38,119,1)","line":{"color":"rgba(72,38,119,1)"}},"textfont":{"color":"rgba(72,38,119,1)"},"error_y":{"color":"rgba(72,38,119,1)"},"error_x":{"color":"rgba(72,38,119,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 37TH ST"],"y":[2],"type":"bar","name":"W 37TH ST","marker":{"color":"rgba(71,45,123,1)","line":{"color":"rgba(71,45,123,1)"}},"textfont":{"color":"rgba(71,45,123,1)"},"error_y":{"color":"rgba(71,45,123,1)"},"error_x":{"color":"rgba(71,45,123,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["UNION SQ W"],"y":[3],"type":"bar","name":"UNION SQ W","marker":{"color":"rgba(70,51,127,1)","line":{"color":"rgba(70,51,127,1)"}},"textfont":{"color":"rgba(70,51,127,1)"},"error_y":{"color":"rgba(70,51,127,1)"},"error_x":{"color":"rgba(70,51,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 31ST ST"],"y":[3],"type":"bar","name":"W 31ST ST","marker":{"color":"rgba(68,58,131,1)","line":{"color":"rgba(68,58,131,1)"}},"textfont":{"color":"rgba(68,58,131,1)"},"error_y":{"color":"rgba(68,58,131,1)"},"error_x":{"color":"rgba(68,58,131,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 56TH ST"],"y":[3],"type":"bar","name":"W 56TH ST","marker":{"color":"rgba(66,64,134,1)","line":{"color":"rgba(66,64,134,1)"}},"textfont":{"color":"rgba(66,64,134,1)"},"error_y":{"color":"rgba(66,64,134,1)"},"error_x":{"color":"rgba(66,64,134,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WORTH ST"],"y":[3],"type":"bar","name":"WORTH ST","marker":{"color":"rgba(64,70,136,1)","line":{"color":"rgba(64,70,136,1)"}},"textfont":{"color":"rgba(64,70,136,1)"},"error_y":{"color":"rgba(64,70,136,1)"},"error_x":{"color":"rgba(64,70,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["E 23RD ST"],"y":[4],"type":"bar","name":"E 23RD ST","marker":{"color":"rgba(62,76,138,1)","line":{"color":"rgba(62,76,138,1)"}},"textfont":{"color":"rgba(62,76,138,1)"},"error_y":{"color":"rgba(62,76,138,1)"},"error_x":{"color":"rgba(62,76,138,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["E 32ND ST"],"y":[4],"type":"bar","name":"E 32ND ST","marker":{"color":"rgba(59,82,139,1)","line":{"color":"rgba(59,82,139,1)"}},"textfont":{"color":"rgba(59,82,139,1)"},"error_y":{"color":"rgba(59,82,139,1)"},"error_x":{"color":"rgba(59,82,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["MURRAY ST"],"y":[4],"type":"bar","name":"MURRAY ST","marker":{"color":"rgba(56,88,140,1)","line":{"color":"rgba(56,88,140,1)"}},"textfont":{"color":"rgba(56,88,140,1)"},"error_y":{"color":"rgba(56,88,140,1)"},"error_x":{"color":"rgba(56,88,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 35TH ST"],"y":[4],"type":"bar","name":"W 35TH ST","marker":{"color":"rgba(54,93,141,1)","line":{"color":"rgba(54,93,141,1)"}},"textfont":{"color":"rgba(54,93,141,1)"},"error_y":{"color":"rgba(54,93,141,1)"},"error_x":{"color":"rgba(54,93,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["E 31ST ST"],"y":[5],"type":"bar","name":"E 31ST ST","marker":{"color":"rgba(51,99,141,1)","line":{"color":"rgba(51,99,141,1)"}},"textfont":{"color":"rgba(51,99,141,1)"},"error_y":{"color":"rgba(51,99,141,1)"},"error_x":{"color":"rgba(51,99,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["E 6TH ST"],"y":[6],"type":"bar","name":"E 6TH ST","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"textfont":{"color":"rgba(49,104,142,1)"},"error_y":{"color":"rgba(49,104,142,1)"},"error_x":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WAVERLY PL"],"y":[6],"type":"bar","name":"WAVERLY PL","marker":{"color":"rgba(46,109,142,1)","line":{"color":"rgba(46,109,142,1)"}},"textfont":{"color":"rgba(46,109,142,1)"},"error_y":{"color":"rgba(46,109,142,1)"},"error_x":{"color":"rgba(46,109,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST    4 STREET"],"y":[6],"type":"bar","name":"WEST    4 STREET","marker":{"color":"rgba(44,114,142,1)","line":{"color":"rgba(44,114,142,1)"}},"textfont":{"color":"rgba(44,114,142,1)"},"error_y":{"color":"rgba(44,114,142,1)"},"error_x":{"color":"rgba(44,114,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["CANAL ST"],"y":[7],"type":"bar","name":"CANAL ST","marker":{"color":"rgba(42,119,142,1)","line":{"color":"rgba(42,119,142,1)"}},"textfont":{"color":"rgba(42,119,142,1)"},"error_y":{"color":"rgba(42,119,142,1)"},"error_x":{"color":"rgba(42,119,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 39TH ST"],"y":[7],"type":"bar","name":"W 39TH ST","marker":{"color":"rgba(40,124,142,1)","line":{"color":"rgba(40,124,142,1)"}},"textfont":{"color":"rgba(40,124,142,1)"},"error_y":{"color":"rgba(40,124,142,1)"},"error_x":{"color":"rgba(40,124,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   50 STREET"],"y":[7],"type":"bar","name":"WEST   50 STREET","marker":{"color":"rgba(38,130,142,1)","line":{"color":"rgba(38,130,142,1)"}},"textfont":{"color":"rgba(38,130,142,1)"},"error_y":{"color":"rgba(38,130,142,1)"},"error_x":{"color":"rgba(38,130,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   52 STREET"],"y":[7],"type":"bar","name":"WEST   52 STREET","marker":{"color":"rgba(36,134,142,1)","line":{"color":"rgba(36,134,142,1)"}},"textfont":{"color":"rgba(36,134,142,1)"},"error_y":{"color":"rgba(36,134,142,1)"},"error_x":{"color":"rgba(36,134,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["AMSTERDAM AVE"],"y":[8],"type":"bar","name":"AMSTERDAM AVE","marker":{"color":"rgba(34,139,141,1)","line":{"color":"rgba(34,139,141,1)"}},"textfont":{"color":"rgba(34,139,141,1)"},"error_y":{"color":"rgba(34,139,141,1)"},"error_x":{"color":"rgba(34,139,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["PARK AVENUE"],"y":[8],"type":"bar","name":"PARK AVENUE","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"textfont":{"color":"rgba(33,144,141,1)"},"error_y":{"color":"rgba(33,144,141,1)"},"error_x":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["6TH AVE"],"y":[9],"type":"bar","name":"6TH AVE","marker":{"color":"rgba(31,149,139,1)","line":{"color":"rgba(31,149,139,1)"}},"textfont":{"color":"rgba(31,149,139,1)"},"error_y":{"color":"rgba(31,149,139,1)"},"error_x":{"color":"rgba(31,149,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["EAST   31 STREET"],"y":[9],"type":"bar","name":"EAST   31 STREET","marker":{"color":"rgba(31,154,138,1)","line":{"color":"rgba(31,154,138,1)"}},"textfont":{"color":"rgba(31,154,138,1)"},"error_y":{"color":"rgba(31,154,138,1)"},"error_x":{"color":"rgba(31,154,138,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 48TH ST"],"y":[10],"type":"bar","name":"W 48TH ST","marker":{"color":"rgba(31,159,136,1)","line":{"color":"rgba(31,159,136,1)"}},"textfont":{"color":"rgba(31,159,136,1)"},"error_y":{"color":"rgba(31,159,136,1)"},"error_x":{"color":"rgba(31,159,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["9TH AVE"],"y":[11],"type":"bar","name":"9TH AVE","marker":{"color":"rgba(32,164,134,1)","line":{"color":"rgba(32,164,134,1)"}},"textfont":{"color":"rgba(32,164,134,1)"},"error_y":{"color":"rgba(32,164,134,1)"},"error_x":{"color":"rgba(32,164,134,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   36 STREET"],"y":[11],"type":"bar","name":"WEST   36 STREET","marker":{"color":"rgba(35,169,131,1)","line":{"color":"rgba(35,169,131,1)"}},"textfont":{"color":"rgba(35,169,131,1)"},"error_y":{"color":"rgba(35,169,131,1)"},"error_x":{"color":"rgba(35,169,131,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST 32 STREET"],"y":[11],"type":"bar","name":"WEST 32 STREET","marker":{"color":"rgba(39,173,129,1)","line":{"color":"rgba(39,173,129,1)"}},"textfont":{"color":"rgba(39,173,129,1)"},"error_y":{"color":"rgba(39,173,129,1)"},"error_x":{"color":"rgba(39,173,129,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["10 AVENUE"],"y":[12],"type":"bar","name":"10 AVENUE","marker":{"color":"rgba(46,179,124,1)","line":{"color":"rgba(46,179,124,1)"}},"textfont":{"color":"rgba(46,179,124,1)"},"error_y":{"color":"rgba(46,179,124,1)"},"error_x":{"color":"rgba(46,179,124,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["EAST   32 STREET"],"y":[12],"type":"bar","name":"EAST   32 STREET","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"textfont":{"color":"rgba(53,183,121,1)"},"error_y":{"color":"rgba(53,183,121,1)"},"error_x":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["HARRISON STREET"],"y":[12],"type":"bar","name":"HARRISON STREET","marker":{"color":"rgba(62,188,116,1)","line":{"color":"rgba(62,188,116,1)"}},"textfont":{"color":"rgba(62,188,116,1)"},"error_y":{"color":"rgba(62,188,116,1)"},"error_x":{"color":"rgba(62,188,116,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 33 STREET"],"y":[12],"type":"bar","name":"W 33 STREET","marker":{"color":"rgba(71,193,110,1)","line":{"color":"rgba(71,193,110,1)"}},"textfont":{"color":"rgba(71,193,110,1)"},"error_y":{"color":"rgba(71,193,110,1)"},"error_x":{"color":"rgba(71,193,110,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   26 STREET"],"y":[12],"type":"bar","name":"WEST   26 STREET","marker":{"color":"rgba(82,197,105,1)","line":{"color":"rgba(82,197,105,1)"}},"textfont":{"color":"rgba(82,197,105,1)"},"error_y":{"color":"rgba(82,197,105,1)"},"error_x":{"color":"rgba(82,197,105,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["CARMINE STREET"],"y":[13],"type":"bar","name":"CARMINE STREET","marker":{"color":"rgba(93,200,99,1)","line":{"color":"rgba(93,200,99,1)"}},"textfont":{"color":"rgba(93,200,99,1)"},"error_y":{"color":"rgba(93,200,99,1)"},"error_x":{"color":"rgba(93,200,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["E 57TH ST"],"y":[13],"type":"bar","name":"E 57TH ST","marker":{"color":"rgba(104,205,91,1)","line":{"color":"rgba(104,205,91,1)"}},"textfont":{"color":"rgba(104,205,91,1)"},"error_y":{"color":"rgba(104,205,91,1)"},"error_x":{"color":"rgba(104,205,91,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["LEXINGTON AVENUE"],"y":[13],"type":"bar","name":"LEXINGTON AVENUE","marker":{"color":"rgba(117,208,84,1)","line":{"color":"rgba(117,208,84,1)"}},"textfont":{"color":"rgba(117,208,84,1)"},"error_y":{"color":"rgba(117,208,84,1)"},"error_x":{"color":"rgba(117,208,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   45 STREET"],"y":[14],"type":"bar","name":"WEST   45 STREET","marker":{"color":"rgba(130,211,77,1)","line":{"color":"rgba(130,211,77,1)"}},"textfont":{"color":"rgba(130,211,77,1)"},"error_y":{"color":"rgba(130,211,77,1)"},"error_x":{"color":"rgba(130,211,77,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1ST AVE"],"y":[17],"type":"bar","name":"1ST AVE","marker":{"color":"rgba(143,214,68,1)","line":{"color":"rgba(143,214,68,1)"}},"textfont":{"color":"rgba(143,214,68,1)"},"error_y":{"color":"rgba(143,214,68,1)"},"error_x":{"color":"rgba(143,214,68,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["CHURCH ST"],"y":[20],"type":"bar","name":"CHURCH ST","marker":{"color":"rgba(157,217,59,1)","line":{"color":"rgba(157,217,59,1)"}},"textfont":{"color":"rgba(157,217,59,1)"},"error_y":{"color":"rgba(157,217,59,1)"},"error_x":{"color":"rgba(157,217,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["SAINT MARKS PLACE"],"y":[20],"type":"bar","name":"SAINT MARKS PLACE","marker":{"color":"rgba(170,220,50,1)","line":{"color":"rgba(170,220,50,1)"}},"textfont":{"color":"rgba(170,220,50,1)"},"error_y":{"color":"rgba(170,220,50,1)"},"error_x":{"color":"rgba(170,220,50,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["3RD AVE"],"y":[32],"type":"bar","name":"3RD AVE","marker":{"color":"rgba(185,222,41,1)","line":{"color":"rgba(185,222,41,1)"}},"textfont":{"color":"rgba(185,222,41,1)"},"error_y":{"color":"rgba(185,222,41,1)"},"error_x":{"color":"rgba(185,222,41,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["BROADWAY"],"y":[32],"type":"bar","name":"BROADWAY","marker":{"color":"rgba(199,224,32,1)","line":{"color":"rgba(199,224,32,1)"}},"textfont":{"color":"rgba(199,224,32,1)"},"error_y":{"color":"rgba(199,224,32,1)"},"error_x":{"color":"rgba(199,224,32,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["5TH AVE"],"y":[56],"type":"bar","name":"5TH AVE","marker":{"color":"rgba(213,226,26,1)","line":{"color":"rgba(213,226,26,1)"}},"textfont":{"color":"rgba(213,226,26,1)"},"error_y":{"color":"rgba(213,226,26,1)"},"error_x":{"color":"rgba(213,226,26,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   35 STREET"],"y":[64],"type":"bar","name":"WEST   35 STREET","marker":{"color":"rgba(227,228,24,1)","line":{"color":"rgba(227,228,24,1)"}},"textfont":{"color":"rgba(227,228,24,1)"},"error_y":{"color":"rgba(227,228,24,1)"},"error_x":{"color":"rgba(227,228,24,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["W 32ND ST"],"y":[124],"type":"bar","name":"W 32ND ST","marker":{"color":"rgba(240,229,29,1)","line":{"color":"rgba(240,229,29,1)"}},"textfont":{"color":"rgba(240,229,29,1)"},"error_y":{"color":"rgba(240,229,29,1)"},"error_x":{"color":"rgba(240,229,29,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WEST   32 STREET"],"y":[133],"type":"bar","name":"WEST   32 STREET","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

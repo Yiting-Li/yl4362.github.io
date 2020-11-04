@@ -6,7 +6,9 @@ output:
     toc_float: true
 ---
 
-# This is Yiting's first website on github!
+-----
+### This is Yiting's first website on github!
+
 
 
 [About me](about.html)
